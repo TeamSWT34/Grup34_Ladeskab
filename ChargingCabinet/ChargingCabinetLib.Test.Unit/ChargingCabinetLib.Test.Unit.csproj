@@ -14,4 +14,8 @@
     <PackageReference Include="NunitXml.TestLogger" Version="3.0.97" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ChargingCabinetLib\ChargingCabinetLib.csproj" />
+  </ItemGroup>
+
 </Project>
