@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Ladeskab
+namespace ConsoleApp
 {
     class Program
     {
