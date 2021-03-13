@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Timers;
 using ChargingCabinetLib.Interface;
+using UsbSimulator;
 
 namespace ChargingCabinetLib
 {

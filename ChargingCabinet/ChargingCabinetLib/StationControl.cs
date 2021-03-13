@@ -5,9 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ChargingCabinetLib.Interface;
-using Ladeskab.Interfaces;
 
-namespace Ladeskab
+namespace ChargingCabinetLib
 {
     public class StationControl
     {
