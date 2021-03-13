@@ -4,7 +4,7 @@ namespace ChargingCabinetLib.Interface
 {
     public class DoorOpenEventArgs : EventArgs
     {
-        public int DoorOpen { set; get; }
+        public bool DoorOpen { set; get; }
     }
     public interface IDoor
     {
