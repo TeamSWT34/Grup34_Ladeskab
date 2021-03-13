@@ -11,7 +11,7 @@ namespace ConsoleApp
             // Assemble your system here from all the classes
 
             IDoor door = new Door();
-            IRfidReader rfidReader = new RfidReader();
+            IRfIdReader rfIdReader = new RfIdReader();
 
             bool finish = false;
             do
@@ -41,7 +41,7 @@ namespace ConsoleApp
                         string idString = System.Console.ReadLine();
 
                         int id = Convert.ToInt32(idString);
-                        rfidReader.OnRfidRead(id);
+                        rfIdReader.OnRfIdRead(id);
                         break;
 
                     default:

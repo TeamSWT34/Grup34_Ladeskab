@@ -5,7 +5,6 @@ namespace ChargingCabinetLib
 {
     public class Door : IDoor
     {
-
         public void LockDoor()
         {
             throw new System.NotImplementedException();

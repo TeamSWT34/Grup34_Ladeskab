@@ -3,16 +3,16 @@
 namespace ChargingCabinetLib.Interface
 {
 
-    public class RfidDetectedEventArgs : EventArgs
+    public class RfIdDetectedEventArgs : EventArgs
     {
         public int RfId { set; get; }
     }
 
-    public interface IRfidReader
+    public interface IRfIdReader
     {
-        event EventHandler<RfidDetectedEventArgs> RfidDetectedEvent;
+        event EventHandler<RfIdDetectedEventArgs> RfIdDetectedEvent;
 
 
-        void OnRfidRead(int id);
+        void OnRfIdRead(int id);
     }
 }

@@ -3,13 +3,13 @@ using ChargingCabinetLib.Interface;
 
 namespace ChargingCabinetLib
 {
-    public class RfidReader : IRfidReader
+    public class RfIdReader : IRfIdReader
     {
-        public event EventHandler<RfidDetectedEventArgs> RfidDetectedEvent;
+        public event EventHandler<RfIdDetectedEventArgs> RfIdDetectedEvent;
 
-        public void OnRfidRead(int id)
+        public void OnRfIdRead(int id)
         {
-            throw new System.NotImplementedException();
+            RfIdDetectedEvent.Invoke(this, new RfIdDetectedEventArgs{RfId = id});
         }
     }
 }
