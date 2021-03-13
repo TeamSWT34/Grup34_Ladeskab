@@ -83,6 +83,17 @@ namespace ChargingCabinetLib
             }
         }
 
+        public void DoorOpened()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DoorClosed()
+        {
+            throw new NotImplementedException();
+        }
+
+
         // Her mangler de andre trigger handlere
     }
 }
