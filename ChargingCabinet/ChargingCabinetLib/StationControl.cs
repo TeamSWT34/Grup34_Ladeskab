@@ -23,14 +23,25 @@ namespace ChargingCabinetLib
         private IChargerControl _charger;
         private IDisplay _display;
         private ILogger _logger;
+        private IRfIdReader _rfIdReader;
 
         private int _oldId;
         private IDoor _door;
 
+        public StationControl()
+        {
+            _rfIdReader.RfIdDetectedEvent += OnRfIdDetectedEvent;
+        }
+
+        private void OnRfIdDetectedEvent(object sender, RfIdDetectedEventArgs e)
+        {
+            RfIdDetected(e.RfId);
+        }
+
         // Her mangler constructor
 
         // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
-        private void RfidDetected(int id)
+        private void RfIdDetected(int id)
         {
             switch (_state)
             {
