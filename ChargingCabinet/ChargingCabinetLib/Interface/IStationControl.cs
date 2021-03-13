@@ -5,8 +5,5 @@
         void DoorOpened();
         void DoorClosed();
 
-
-        void RfidDetected(int id);
-
     }
 }
