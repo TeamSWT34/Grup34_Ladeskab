@@ -3,12 +3,10 @@
 
     public interface IDoor
     {
-        void LockDoor();
-        void UnlockDoor();
-
         void OnDoorOpen();
         void OnDoorClose();
-    }
 
-   
+        void LockDoor();
+        void UnlockDoor();
+    }
 }

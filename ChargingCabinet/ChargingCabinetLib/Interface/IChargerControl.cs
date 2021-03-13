@@ -2,7 +2,9 @@
 {
     public interface IChargerControl
     {
-        bool Connected { get;}
+        
+        bool IsConnected();
+
         void StartCharge();
         void StopCharge();
     }

@@ -21,6 +21,7 @@ namespace ChargingCabinetLib
         // Her mangler flere member variable
         private LadeskabState _state;
         private IChargerControl _charger;
+        private IDisplay _display;
         private int _oldId;
         private IDoor _door;
 
@@ -36,7 +37,7 @@ namespace ChargingCabinetLib
             {
                 case LadeskabState.Available:
                     // Check for ladeforbindelse
-                    if (_charger.Connected)
+                    if (_charger.IsConnected())
                     {
                         _door.LockDoor();
                         _charger.StartCharge();
@@ -46,12 +47,12 @@ namespace ChargingCabinetLib
                             writer.WriteLine(DateTime.Now + ": Skab låst med RFID: {0}", id);
                         }
 
-                        Console.WriteLine("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
+                        _display.ShowOnDisplay("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
                         _state = LadeskabState.Locked;
                     }
                     else
                     {
-                        Console.WriteLine("Din telefon er ikke ordentlig tilsluttet. Prøv igen.");
+                        _display.ShowOnDisplay("Din telefon er ikke ordentlig tilsluttet. Prøv igen.");
                     }
 
                     break;
@@ -71,12 +72,12 @@ namespace ChargingCabinetLib
                             writer.WriteLine(DateTime.Now + ": Skab låst op med RFID: {0}", id);
                         }
 
-                        Console.WriteLine("Tag din telefon ud af skabet og luk døren");
+                        _display.ShowOnDisplay("Tag din telefon ud af skabet og luk døren");
                         _state = LadeskabState.Available;
                     }
                     else
                     {
-                        Console.WriteLine("Forkert RFID tag");
+                        _display.ShowOnDisplay("Forkert RFID tag");
                     }
 
                     break;
