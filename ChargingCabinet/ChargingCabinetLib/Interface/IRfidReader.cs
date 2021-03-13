@@ -5,7 +5,7 @@ namespace ChargingCabinetLib.Interface
 
     public class RfidDetectedEventArgs : EventArgs
     {
-        public int Rfid { set; get; }
+        public int RfId { set; get; }
     }
 
     public interface IRfidReader
