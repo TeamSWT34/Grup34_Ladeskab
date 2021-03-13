@@ -20,12 +20,10 @@ namespace ChargingCabinetLib
 
         // Her mangler flere member variable
         private LadeskabState _state;
-<<<<<<< HEAD
         private IChargerControl _charger;
         private int _oldId;
-=======
         private IUsbCharger _charger;
->>>>>>> parent of 755ed34 (Ændret fejl på kode fra gammel handin)
+
         private IDoor _door;
 
         private int _oldId;
