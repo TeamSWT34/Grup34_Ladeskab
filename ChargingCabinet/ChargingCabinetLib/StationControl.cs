@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ChargingCabinetLib.Interface;
 using Ladeskab.Interfaces;
 
 namespace Ladeskab
@@ -20,7 +21,7 @@ namespace Ladeskab
 
         // Her mangler flere member variable
         private LadeskabState _state;
-        private IChargeControl _charger;
+        private IChargerControl _charger;
         private int _oldId;
         private IDoor _door;
 
