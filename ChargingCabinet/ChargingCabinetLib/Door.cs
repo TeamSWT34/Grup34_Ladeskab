@@ -1,4 +1,5 @@
-﻿using ChargingCabinetLib.Interface;
+﻿using System;
+using ChargingCabinetLib.Interface;
 
 namespace ChargingCabinetLib
 {
@@ -19,6 +20,8 @@ namespace ChargingCabinetLib
         {
             throw new System.NotImplementedException();
         }
+
+        public event EventHandler<DoorOpenEventArgs> DoorOpenCloseEvent;
 
         public void OnDoorOpen()
         {
