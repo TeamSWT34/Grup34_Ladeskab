@@ -22,11 +22,13 @@ namespace ChargingCabinetLib
         private LadeskabState _state;
         private IChargerControl _charger;
         private IDisplay _display;
+        private ILogger _logger;
+
         private int _oldId;
         private IDoor _door;
 
 
-        private string logFile = "logfile.txt"; // Navnet på systemets log-fil
+        
 
         // Her mangler constructor
 
@@ -42,10 +44,10 @@ namespace ChargingCabinetLib
                         _door.LockDoor();
                         _charger.StartCharge();
                         _oldId = id;
-                        using (var writer = File.AppendText(logFile))
-                        {
-                            writer.WriteLine(DateTime.Now + ": Skab låst med RFID: {0}", id);
-                        }
+
+                        _logger.Log($"{DateTime.Now}: Skab låst med RFID: {id}");
+
+                        
 
                         _display.ShowOnDisplay("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
                         _state = LadeskabState.Locked;
@@ -67,10 +69,9 @@ namespace ChargingCabinetLib
                     {
                         _charger.StopCharge();
                         _door.UnlockDoor();
-                        using (var writer = File.AppendText(logFile))
-                        {
-                            writer.WriteLine(DateTime.Now + ": Skab låst op med RFID: {0}", id);
-                        }
+
+                        _logger.Log($"{DateTime.Now}: Skab låst op med RFID: {id}");
+                        
 
                         _display.ShowOnDisplay("Tag din telefon ud af skabet og luk døren");
                         _state = LadeskabState.Available;
