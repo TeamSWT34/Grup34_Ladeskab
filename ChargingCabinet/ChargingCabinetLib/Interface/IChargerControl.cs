@@ -1,6 +1,9 @@
 ﻿namespace ChargingCabinetLib.Interface
 {
-    internal interface IChargerControl
+    public interface IChargerControl
     {
+        bool Connected { get; set; }
+        void StartCharge();
+        void StopCharge();
     }
 }
