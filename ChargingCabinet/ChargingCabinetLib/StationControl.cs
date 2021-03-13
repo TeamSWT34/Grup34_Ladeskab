@@ -8,7 +8,7 @@ using ChargingCabinetLib.Interface;
 
 namespace ChargingCabinetLib
 {
-    public class StationControl
+    public class StationControl : IStationControl
     {
         // Enum med tilstande ("states") svarende til tilstandsdiagrammet for klassen
         private enum LadeskabState
@@ -20,9 +20,15 @@ namespace ChargingCabinetLib
 
         // Her mangler flere member variable
         private LadeskabState _state;
+<<<<<<< HEAD
         private IChargerControl _charger;
         private int _oldId;
+=======
+        private IUsbCharger _charger;
+>>>>>>> parent of 755ed34 (Ændret fejl på kode fra gammel handin)
         private IDoor _door;
+
+        private int _oldId;
 
         private string logFile = "logfile.txt"; // Navnet på systemets log-fil
 
