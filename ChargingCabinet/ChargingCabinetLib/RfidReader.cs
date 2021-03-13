@@ -7,9 +7,6 @@ namespace ChargingCabinetLib
     {
         public event EventHandler<RfIdDetectedEventArgs> RfIdDetectedEvent;
 
-        public void OnRfIdRead(int id)
-        {
-            RfIdDetectedEvent.Invoke(this, new RfIdDetectedEventArgs{RfId = id});
-        }
+        public void OnRfIdRead(int id) => RfIdDetectedEvent?.Invoke(this, new RfIdDetectedEventArgs{RfId = id});
     }
 }

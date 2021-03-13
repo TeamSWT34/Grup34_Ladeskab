@@ -5,26 +5,19 @@ namespace ChargingCabinetLib
 {
     public class Door : IDoor
     {
-        public void LockDoor()
-        {
-            throw new System.NotImplementedException();
-        }
+        private bool _isLocked;
+        public void LockDoor() =>_isLocked = true;
+
+        public void UnlockDoor() => _isLocked = false;
+
+        public void OnDoorOpen() => OnDoorEvent(true);
+
+        public void OnDoorClose() => OnDoorEvent(false);
+
+        private void OnDoorEvent(bool eventArgValue) => DoorOpenCloseEvent?.Invoke(this, new DoorOpenEventArgs { DoorOpen = eventArgValue });
         
-        public void UnlockDoor()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void OnDoorClose()
-        {
-            throw new System.NotImplementedException();
-        }
-
         public event EventHandler<DoorOpenEventArgs> DoorOpenCloseEvent;
 
-        public void OnDoorOpen()
-        {
-            throw new System.NotImplementedException();
-        }
+
     }
 }
