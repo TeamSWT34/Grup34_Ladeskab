@@ -4,11 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ChargingCabinetLib.Interface;
+using Ladeskab.Interfaces;
 
-namespace ChargingCabinetLib
+namespace Ladeskab
 {
-    public class StationControl : IStationControl
+    public class StationControl
     {
         // Enum med tilstande ("states") svarende til tilstandsdiagrammet for klassen
         private enum LadeskabState
@@ -20,10 +20,9 @@ namespace ChargingCabinetLib
 
         // Her mangler flere member variable
         private LadeskabState _state;
-        private IUsbCharger _charger;
-        private IDoor _door;
-
+        private IChargeControl _charger;
         private int _oldId;
+        private IDoor _door;
 
         private string logFile = "logfile.txt"; // Navnet på systemets log-fil
 
