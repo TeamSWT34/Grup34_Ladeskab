@@ -27,9 +27,6 @@ namespace ChargingCabinetLib
         private int _oldId;
         private IDoor _door;
 
-
-        
-
         // Her mangler constructor
 
         // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
@@ -46,8 +43,6 @@ namespace ChargingCabinetLib
                         _oldId = id;
 
                         _logger.Log($"{DateTime.Now}: Skab låst med RFID: {id}");
-
-                        
 
                         _display.ShowOnDisplay("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
                         _state = LadeskabState.Locked;
@@ -71,7 +66,6 @@ namespace ChargingCabinetLib
                         _door.UnlockDoor();
 
                         _logger.Log($"{DateTime.Now}: Skab låst op med RFID: {id}");
-                        
 
                         _display.ShowOnDisplay("Tag din telefon ud af skabet og luk døren");
                         _state = LadeskabState.Available;
@@ -85,12 +79,12 @@ namespace ChargingCabinetLib
             }
         }
 
-        public void DoorOpened()
+        private void DoorOpened()
         {
             throw new NotImplementedException();
         }
 
-        public void DoorClosed()
+        private void DoorClosed()
         {
             throw new NotImplementedException();
         }
