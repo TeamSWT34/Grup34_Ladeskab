@@ -44,5 +44,39 @@ namespace ChargingCabinetLib.Test.Unit
 
 			Assert.That(eventCounter == b && ifDoorClosed == res);
 	    }
-    }
+
+        [TestCase(true, false, false)]
+        [TestCase(false, true, false)]
+        [TestCase(true, true, false)]
+		[TestCase(false, false, true)]
+		public void LockDoor_isLocked(bool a,bool b, bool res)
+        {
+			if(a)
+				_uut.OnDoorOpen();
+			
+            _uut.LockDoor();
+
+			if(b)
+				_uut.UnlockDoor();
+
+			Assert.That(_uut.IsLocked==res);
+        }
+
+        [TestCase(true, true, false)]
+        [TestCase(false, true, false)]
+        [TestCase(true, false, false)]
+		[TestCase(false, false, false)]
+		public void LockDoor_isUnlocked(bool a, bool b, bool res)
+        {
+            if (a)
+                _uut.OnDoorOpen();
+            
+            if (b)
+				_uut.LockDoor();
+
+			_uut.UnlockDoor();
+
+			Assert.That(_uut.IsLocked == res);
+        }
+	}
 }

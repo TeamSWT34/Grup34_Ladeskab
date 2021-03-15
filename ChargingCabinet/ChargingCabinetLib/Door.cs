@@ -6,6 +6,9 @@ namespace ChargingCabinetLib
     public class Door : IDoor
     {
         private bool _isLocked;
+
+        public bool IsLocked { get=>_isLocked;}
+
         private bool _isOpen;
         public void LockDoor()
         {
