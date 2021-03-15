@@ -18,6 +18,7 @@ namespace ChargingCabinetLib.Test.Unit
         [Test]
         public void DisplayProgramMsg_CanRun()
         {
+            //_uut.DisplayStationMsg("test");
             Assert.DoesNotThrow(()=>_uut.DisplayStationMsg("test"));
         }
 
