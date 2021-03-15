@@ -12,12 +12,14 @@ namespace ChargingCabinetLib
         private readonly IUsbCharger _usbCharger;
         private readonly IChargerDisplay _display;
         private int _displayCounter = MAX_DISPLAY_COUNT;
+
         public ChargerControl(IUsbCharger usbCharger, IChargerDisplay  display)
         {
             _display = display;
             _usbCharger = usbCharger;
             _usbCharger.CurrentValueEvent += OnCurrentValueEvent;
         }
+
 
         private void OnCurrentValueEvent(object sender, CurrentEventArgs e)
         {
