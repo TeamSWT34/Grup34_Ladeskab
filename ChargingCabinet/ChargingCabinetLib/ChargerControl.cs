@@ -5,11 +5,12 @@ using ChargingCabinetLib.Interface;
 
 namespace ChargingCabinetLib
 {
-    class ChargerControl : IChargerControl
+    public class ChargerControl : IChargerControl
     {
         private readonly IUsbCharger _usbCharger;
-        private readonly IDisplay _display;
-        public ChargerControl(IUsbCharger usbCharger, IDisplay  display)
+        private readonly IChargerDisplay _display;
+        private int _displayCounter = 40;
+        public ChargerControl(IUsbCharger usbCharger, IChargerDisplay  display)
         {
             _display = display;
             _usbCharger = usbCharger;
@@ -18,7 +19,13 @@ namespace ChargingCabinetLib
 
         private void OnCurrentValueEvent(object sender, CurrentEventArgs e)
         {
-            _display.ShowOnDisplay($"current Value: {e.Current}");
+            if (_displayCounter > 50)
+            { 
+                _display.DisplayChargerMsg($"{e.Current}");
+                _displayCounter = 0;
+            }
+            else
+                _displayCounter++;
         }
 
         public void StartCharge()

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Dynamic;
 using ChargingCabinetLib;
 using ChargingCabinetLib.Interface;
 
@@ -12,12 +13,16 @@ namespace ConsoleApp
 
             IDoor door = new Door();
             IRfIdReader rfIdReader = new RfIdReader();
+            IChargerDisplay display = new ConsoleChargerDisplay();
+
+            StationControl stationControl = CreateStationControl(door, rfIdReader, display);
+            
 
             bool finish = false;
             do
             {
                 string input;
-                System.Console.WriteLine("Indtast E, O, C, R: ");
+                display.DisplayProgramMsg("Indtast E, O, C, R: ");
                 input = Console.ReadLine();
                 if (string.IsNullOrEmpty(input))
                     continue;
@@ -37,7 +42,7 @@ namespace ConsoleApp
                         break;
 
                     case 'R':
-                        System.Console.WriteLine("Indtast RFID id: ");
+                        display.DisplayProgramMsg("Indtast RFID id: ");
                         string idString = System.Console.ReadLine();
 
                         int id = Convert.ToInt32(idString);
@@ -49,6 +54,17 @@ namespace ConsoleApp
                 }
 
             } while (!finish);
+        }
+
+        private static StationControl CreateStationControl(IDoor door, IRfIdReader rfIdReader, IChargerDisplay chargerDisplay)
+        {
+            
+
+            return new StationControl(new ChargerControl(new UsbChargerSimulator(), chargerDisplay),
+                                      chargerDisplay,
+                                      new FileLogger(),
+                                      rfIdReader,
+                                      door);
         }
     }
 }
