@@ -20,11 +20,9 @@ namespace ChargingCabinetLib
 
         // Her mangler flere member variable
         private LadeskabState _state;
-        private IChargerControl _charger;
-        private IChargerDisplay _display;
-        private ILogger _logger;
-        //private IRfIdReader _rfIdReader;
-        //
+        private readonly IChargerControl _charger;
+        private readonly IChargerDisplay _display;
+        private readonly ILogger _logger;
 
         private int _oldId;
         private IDoor _door;
@@ -124,8 +122,6 @@ namespace ChargingCabinetLib
         {
 	        _state = LadeskabState.Available;
         }
-
-
         // Her mangler de andre trigger handlere
     }
 }
