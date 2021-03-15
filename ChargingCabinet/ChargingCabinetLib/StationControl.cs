@@ -46,11 +46,11 @@ namespace ChargingCabinetLib
 		{
 			if (e.DoorOpen )
 			{
-				_state = LadeskabState.DoorOpen;
+				DoorOpened();
 			}
 			else
 			{
-				_state = LadeskabState.Available;
+				DoorClosed();
 			}
 		}
 
@@ -113,12 +113,12 @@ namespace ChargingCabinetLib
 
         private void DoorOpened()
         {
-            throw new NotImplementedException();
+	        _state = LadeskabState.DoorOpen;
         }
 
         private void DoorClosed()
         {
-            throw new NotImplementedException();
+	        _state = LadeskabState.Available;
         }
 
 

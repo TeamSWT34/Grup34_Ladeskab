@@ -7,8 +7,8 @@ namespace ChargingCabinetLib
 {
     class ChargerControl : IChargerControl
     {
-        private IUsbCharger _usbCharger;
-        private IDisplay _display;
+        private readonly IUsbCharger _usbCharger;
+        private readonly IDisplay _display;
         public ChargerControl(IUsbCharger usbCharger, IDisplay  display)
         {
             _display = display;
