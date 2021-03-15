@@ -14,15 +14,16 @@ namespace ConsoleApp
             IDoor door = new Door();
             IRfIdReader rfIdReader = new RfIdReader();
             IChargerDisplay display = new ConsoleChargerDisplay();
+            UsbChargerSimulator phoneState = new UsbChargerSimulator();
 
-            StationControl stationControl = CreateStationControl(door, rfIdReader, display);
+            StationControl stationControl = CreateStationControl(door, rfIdReader, display, phoneState);
             
 
             bool finish = false;
             do
             {
                 string input;
-                display.DisplayProgramMsg("Indtast E, O, C, R: ");
+                display.DisplayProgramMsg("Indtast 'Exit, 'Open, 'Close, 'Usb, 'RfRead: ");
                 input = Console.ReadLine();
                 if (string.IsNullOrEmpty(input))
                     continue;
@@ -30,18 +31,28 @@ namespace ConsoleApp
                 switch (input[0])
                 {
                     case 'E':
+                    case 'e':
                         finish = true;
                         break;
 
                     case 'O':
+                    case 'o':
                         door.OnDoorOpen();
                         break;
 
                     case 'C':
+                    case 'c':
                         door.OnDoorClose();
                         break;
 
+                    case 'U':
+                    case 'u':
+                        phoneState.SimulateConnected(!phoneState.Connected);
+                        display.DisplayChargerMsg($"Usb tilslutning: {phoneState.Connected}");
+                        break;
+
                     case 'R':
+                    case 'r':
                         display.DisplayProgramMsg("Indtast RFID id: ");
                         string idString = System.Console.ReadLine();
 
@@ -56,11 +67,11 @@ namespace ConsoleApp
             } while (!finish);
         }
 
-        private static StationControl CreateStationControl(IDoor door, IRfIdReader rfIdReader, IChargerDisplay chargerDisplay)
+        private static StationControl CreateStationControl(IDoor door, IRfIdReader rfIdReader, IChargerDisplay chargerDisplay, IUsbCharger usbCharger)
         {
             
 
-            return new StationControl(new ChargerControl(new UsbChargerSimulator(), chargerDisplay),
+            return new StationControl(new ChargerControl(usbCharger, chargerDisplay),
                                       chargerDisplay,
                                       new FileLogger(),
                                       rfIdReader,

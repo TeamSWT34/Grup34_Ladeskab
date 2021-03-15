@@ -47,13 +47,13 @@ namespace ChargingCabinetLib
 			if (e.DoorOpen )
 			{
 				DoorOpened();
-                _logger.Log("Dør åben");
+                //_logger.Log("Dør åben");
                 _display.DisplayStationMsg("Dør åbnet");
             }
 			else
 			{
 				DoorClosed();
-                _logger.Log("Dør lukket");
+                //_logger.Log("Dør lukket");
                 _display.DisplayStationMsg("Dør lukket");
             }
 		}
@@ -78,7 +78,7 @@ namespace ChargingCabinetLib
                         _charger.StartCharge();
                         _oldId = id;
 
-                        _logger.Log($"{DateTime.Now}: Skab låst med RFID: {id}");
+                        _logger.Log($"Skab låst med RFID: {id}");
 
                         _display.DisplayStationMsg("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
                         _state = LadeskabState.Locked;
@@ -101,9 +101,9 @@ namespace ChargingCabinetLib
                         _charger.StopCharge();
                         _door.UnlockDoor();
 
-                        _logger.Log($"{DateTime.Now}: Skab låst op med RFID: {id}");
+                        _logger.Log($"Skab låst op med RFID: {id}");
 
-                        _display.DisplayStationMsg("åben skabet , tag din telefon ud af skabet og husk at luk døren");
+                        _display.DisplayStationMsg("Åben skabet og tag din telefon ud, husk at luk døren efter dig!");
                         _state = LadeskabState.Available;
                     }
                     else

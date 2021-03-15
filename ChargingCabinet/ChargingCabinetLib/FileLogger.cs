@@ -21,7 +21,7 @@ namespace ChargingCabinetLib
         {
             using (var writer = File.AppendText(_logfile))
             {
-                writer.WriteLine(writeToLog);
+                writer.WriteLine($"{DateTime.Now}: {writeToLog}");
             }
         }
     }
