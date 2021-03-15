@@ -10,11 +10,11 @@ namespace ChargingCabinetLib.Test.Unit
         [SetUp]
         public void Setup()
         {
-            _uut = new FileLogger();
+            _uut = new FileLogger("test");
         }
 
         [Test]
-        public void ConsoleChargeDisplay_CanRunDisplayProgramMsg()
+        public void Log_CanRun()
         {
             Assert.DoesNotThrow(() => _uut.Log("test"));
         }

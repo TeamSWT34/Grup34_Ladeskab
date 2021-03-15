@@ -16,19 +16,19 @@ namespace ChargingCabinetLib.Test.Unit
         }
 
         [Test]
-        public void ConsoleChargeDisplay_CanRunDisplayProgramMsg()
+        public void DisplayProgramMsg_CanRun()
         {
             Assert.DoesNotThrow(()=>_uut.DisplayStationMsg("test"));
         }
 
         [Test]
-        public void ConsoleChargeDisplay_CanRunDisplayStationMsg()
+        public void DisplayStationMsg_CanRun()
         {
             Assert.DoesNotThrow(() => _uut.DisplayStationMsg("test"));
         }
 
         [Test]
-        public void ConsoleChargeDisplay_CanRunDisplayChargerMsg()
+        public void DisplayChargerMsg_CanRun()
         {
             Assert.DoesNotThrow(() => _uut.DisplayStationMsg("test"));
         }
