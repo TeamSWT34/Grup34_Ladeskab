@@ -16,7 +16,7 @@ namespace ChargingCabinetLib.Test.Unit
         [Test]
         public void Log_CanRun()
         {
-            Assert.DoesNotThrow(() => _uut.Log("test"));
+            Assert.DoesNotThrow(()=> _uut.Log("test"));
         }
     }
 }
