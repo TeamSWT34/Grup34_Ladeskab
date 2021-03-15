@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using ChargingCabinetLib.Interface;
+using NSubstitute;
+using NUnit.Framework;
 
 namespace ChargingCabinetLib.Test.Unit
 {
@@ -13,11 +15,17 @@ namespace ChargingCabinetLib.Test.Unit
             _uut = new RfIdReader();
         }
 
-        [TestCase()]
-        public void OnRfIdRead_Event()
+        [TestCase(-1)]
+        [TestCase(0)]
+        [TestCase(1)]
+        [TestCase(int.MinValue)]
+        [TestCase(int.MaxValue)]
+        public void OnRfIdRead_Event(int testRfId)
         {
-            _uut.OnRfIdRead(1);
-            Assert.DoesNotThrow(() => _uut.Log("test"));
+            RfIdDetectedEventArgs rfIdDetectedEventArgs = null;
+            _uut.RfIdDetectedEvent += (o, e) => rfIdDetectedEventArgs = e;
+            _uut.OnRfIdRead(testRfId);
+            Assert.That(rfIdDetectedEventArgs.RfId == testRfId);
         }
     }
 }
