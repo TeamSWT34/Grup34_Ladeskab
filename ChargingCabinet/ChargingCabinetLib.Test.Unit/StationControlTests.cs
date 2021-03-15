@@ -1,5 +1,7 @@
 ﻿using ChargingCabinetLib.Interface;
 using NSubstitute;
+using NSubstitute.Core;
+using NSubstitute.Extensions;
 using NUnit.Framework;
 
 namespace ChargingCabinetLib.Test.Unit
@@ -19,14 +21,25 @@ namespace ChargingCabinetLib.Test.Unit
         {
             _fakeChargerControl = Substitute.For<IChargerControl>();
             _fakeChargerDisplay = Substitute.For<IChargerDisplay>();
-            _fakeChargerDisplay = Substitute.For<IChargerDisplay>();
             _fakeRfIdReader = Substitute.For<IRfIdReader>();
             _fakeDoor = Substitute.For<IDoor>();
-
             _fakeLogger = Substitute.For<ILogger>();
+
             _uut = new StationControl(_fakeChargerControl, _fakeChargerDisplay, _fakeLogger, _fakeRfIdReader, _fakeDoor);
         }
 
+        [Test]
+        public void DoorOpened_isDisplayCalled()
+        {
+            _fakeDoor.OnDoorOpen();
+            _fakeChargerDisplay.Received().DisplayStationMsg("Dør åbnet");
+        }
 
+        [Test]
+        public void DoorClosed_isDisplayCalled()
+        {
+            _fakeDoor.OnDoorClose();
+            _fakeChargerDisplay.Received().DisplayStationMsg("Dør lukket");
+        }
     }
 }
