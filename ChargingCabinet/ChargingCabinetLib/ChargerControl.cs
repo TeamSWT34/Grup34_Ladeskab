@@ -9,7 +9,7 @@ namespace ChargingCabinetLib
     {
         private readonly IUsbCharger _usbCharger;
         private readonly IChargerDisplay _display;
-        private int _displayCounter = 50;
+        private int _displayCounter = 40;
         public ChargerControl(IUsbCharger usbCharger, IChargerDisplay  display)
         {
             _display = display;
@@ -21,7 +21,7 @@ namespace ChargingCabinetLib
         {
             if (_displayCounter > 50)
             { 
-                _display.DisplayChargerMsg($"current Value: {e.Current}");
+                _display.DisplayChargerMsg($"{e.Current}");
                 _displayCounter = 0;
             }
             else

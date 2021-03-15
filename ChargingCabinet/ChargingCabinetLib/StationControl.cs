@@ -103,7 +103,7 @@ namespace ChargingCabinetLib
 
                         _logger.Log($"{DateTime.Now}: Skab låst op med RFID: {id}");
 
-                        _display.DisplayStationMsg("Tag din telefon ud af skabet og luk døren");
+                        _display.DisplayStationMsg("åben skabet , tag din telefon ud af skabet og husk at luk døren");
                         _state = LadeskabState.Available;
                     }
                     else

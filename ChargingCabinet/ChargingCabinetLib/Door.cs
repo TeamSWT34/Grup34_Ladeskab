@@ -6,13 +6,36 @@ namespace ChargingCabinetLib
     public class Door : IDoor
     {
         private bool _isLocked;
-        public void LockDoor() =>_isLocked = true;
+        private bool _isOpen;
+        public void LockDoor()
+        {
+            if(!_isOpen)
+                _isLocked = true;
+        }
 
-        public void UnlockDoor() => _isLocked = false;
+        public void UnlockDoor()
+        {
+            if(!_isOpen)
+                _isLocked = false;
+        } 
 
-        public void OnDoorOpen() => OnDoorEvent(true);
+        public void OnDoorOpen()
+        {
+            if (!_isLocked && !_isOpen)
+            {
+                _isOpen = true;
+                OnDoorEvent(_isOpen);
+            }
+        }
 
-        public void OnDoorClose() => OnDoorEvent(false);
+        public void OnDoorClose()
+        {
+            if (_isOpen)
+            {
+                _isOpen = false;
+                OnDoorEvent(_isOpen);
+            }
+        }
 
         private void OnDoorEvent(bool eventArgValue) => DoorOpenCloseEvent?
 	        .Invoke(this, new DoorOpenEventArgs { DoorOpen = eventArgValue });
