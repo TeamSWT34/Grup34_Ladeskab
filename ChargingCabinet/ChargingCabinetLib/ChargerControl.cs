@@ -7,20 +7,33 @@ namespace ChargingCabinetLib
 {
     class ChargerControl : IChargerControl
     {
-       
+        private IUsbCharger _usbCharger;
+        private IDisplay _display;
+        public ChargerControl(IUsbCharger usbCharger, IDisplay  display)
+        {
+            _display = display;
+            _usbCharger = usbCharger;
+            _usbCharger.CurrentValueEvent += OnCurrentValueEvent;
+        }
+
+        private void OnCurrentValueEvent(object sender, CurrentEventArgs e)
+        {
+            _display.ShowOnDisplay($"current Value: {e.Current}");
+        }
+
         public void StartCharge()
         {
-            throw new NotImplementedException();
+            _usbCharger.StartCharge();
         }
 
         public void StopCharge()
         {
-            throw new NotImplementedException();
+            _usbCharger.StopCharge();
         }
 
         bool IChargerControl.IsConnected()
         {
-            throw new NotImplementedException();
+            return _usbCharger.Connected;
         }
     }
 }
