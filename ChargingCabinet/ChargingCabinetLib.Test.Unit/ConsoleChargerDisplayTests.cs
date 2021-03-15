@@ -15,23 +15,23 @@ namespace ChargingCabinetLib.Test.Unit
             _uut = new ConsoleChargerDisplay();
         }
 
-        [Test]
-        public void DisplayProgramMsg_CanRun()
-        {
-            //_uut.DisplayStationMsg("test");
-            Assert.DoesNotThrow(()=>_uut.DisplayStationMsg("test"));
-        }
+        //[Test]
+        //public void DisplayProgramMsg_CanRun()
+        //{
+        //    //_uut.DisplayStationMsg("test");
+        //    Assert.DoesNotThrow(()=>_uut.DisplayStationMsg("test"));
+        //}
 
-        [Test]
-        public void DisplayStationMsg_CanRun()
-        {
-            Assert.DoesNotThrow(() => _uut.DisplayStationMsg("test"));
-        }
+        //[Test]
+        //public void DisplayStationMsg_CanRun()
+        //{
+        //    Assert.DoesNotThrow(() => _uut.DisplayStationMsg("test"));
+        //}
 
-        [Test]
-        public void DisplayChargerMsg_CanRun()
-        {
-            Assert.DoesNotThrow(() => _uut.DisplayStationMsg("test"));
-        }
+        //[Test]
+        //public void DisplayChargerMsg_CanRun()
+        //{
+        //    Assert.DoesNotThrow(() => _uut.DisplayStationMsg("test"));
+        //}
     }
 }
