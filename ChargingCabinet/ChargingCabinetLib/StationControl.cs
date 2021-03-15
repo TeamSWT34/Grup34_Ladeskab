@@ -23,17 +23,38 @@ namespace ChargingCabinetLib
         private IChargerControl _charger;
         private IDisplay _display;
         private ILogger _logger;
-        private IRfIdReader _rfIdReader;
+        //private IRfIdReader _rfIdReader;
+        //
 
         private int _oldId;
         private IDoor _door;
 
-        public StationControl()
-        {
-            _rfIdReader.RfIdDetectedEvent += OnRfIdDetectedEvent;
+        public StationControl(IChargerControl charControl, IDisplay display, 
+	        ILogger logger, IRfIdReader reader, IDoor door)
+        { 
+	        reader.RfIdDetectedEvent += OnRfIdDetectedEvent;
+
+	        _charger = charControl;
+	        _display = display;
+	        _logger = logger;
+	        _door = door;
+
+	        _door.DoorOpenCloseEvent += OnDoorOpenCloseEvent;
         }
 
-        private void OnRfIdDetectedEvent(object sender, RfIdDetectedEventArgs e)
+		private void OnDoorOpenCloseEvent(object sender, DoorOpenEventArgs e)
+		{
+			if (e.DoorOpen )
+			{
+				_state = LadeskabState.DoorOpen;
+			}
+			else
+			{
+				_state = LadeskabState.Available;
+			}
+		}
+
+		private void OnRfIdDetectedEvent(object sender, RfIdDetectedEventArgs e)
         {
             RfIdDetected(e.RfId);
         }

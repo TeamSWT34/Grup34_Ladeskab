@@ -14,7 +14,8 @@ namespace ChargingCabinetLib
 
         public void OnDoorClose() => OnDoorEvent(false);
 
-        private void OnDoorEvent(bool eventArgValue) => DoorOpenCloseEvent?.Invoke(this, new DoorOpenEventArgs { DoorOpen = eventArgValue });
+        private void OnDoorEvent(bool eventArgValue) => DoorOpenCloseEvent?
+	        .Invoke(this, new DoorOpenEventArgs { DoorOpen = eventArgValue });
         
         public event EventHandler<DoorOpenEventArgs> DoorOpenCloseEvent;
 
