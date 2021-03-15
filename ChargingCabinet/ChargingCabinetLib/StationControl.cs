@@ -21,7 +21,7 @@ namespace ChargingCabinetLib
         // Her mangler flere member variable
         private LadeskabState _state;
         private IChargerControl _charger;
-        private IDisplay _display;
+        private IChargerDisplay _display;
         private ILogger _logger;
         //private IRfIdReader _rfIdReader;
         //
@@ -29,7 +29,7 @@ namespace ChargingCabinetLib
         private int _oldId;
         private IDoor _door;
 
-        public StationControl(IChargerControl charControl, IDisplay display, 
+        public StationControl(IChargerControl charControl, IChargerDisplay display, 
 	        ILogger logger, IRfIdReader reader, IDoor door)
         { 
 	        reader.RfIdDetectedEvent += OnRfIdDetectedEvent;
@@ -47,11 +47,15 @@ namespace ChargingCabinetLib
 			if (e.DoorOpen )
 			{
 				DoorOpened();
-			}
+                _logger.Log("Dør åben");
+                _display.DisplayStationMsg("Dør åbnet");
+            }
 			else
 			{
 				DoorClosed();
-			}
+                _logger.Log("Dør lukket");
+                _display.DisplayStationMsg("Dør lukket");
+            }
 		}
 
 		private void OnRfIdDetectedEvent(object sender, RfIdDetectedEventArgs e)
@@ -76,12 +80,12 @@ namespace ChargingCabinetLib
 
                         _logger.Log($"{DateTime.Now}: Skab låst med RFID: {id}");
 
-                        _display.ShowOnDisplay("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
+                        _display.DisplayStationMsg("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
                         _state = LadeskabState.Locked;
                     }
                     else
                     {
-                        _display.ShowOnDisplay("Din telefon er ikke ordentlig tilsluttet. Prøv igen.");
+                        _display.DisplayStationMsg("Din telefon er ikke ordentlig tilsluttet. Prøv igen.");
                     }
 
                     break;
@@ -99,12 +103,12 @@ namespace ChargingCabinetLib
 
                         _logger.Log($"{DateTime.Now}: Skab låst op med RFID: {id}");
 
-                        _display.ShowOnDisplay("Tag din telefon ud af skabet og luk døren");
+                        _display.DisplayStationMsg("Tag din telefon ud af skabet og luk døren");
                         _state = LadeskabState.Available;
                     }
                     else
                     {
-                        _display.ShowOnDisplay("Forkert RFID tag");
+                        _display.DisplayStationMsg("Forkert RFID tag");
                     }
 
                     break;
