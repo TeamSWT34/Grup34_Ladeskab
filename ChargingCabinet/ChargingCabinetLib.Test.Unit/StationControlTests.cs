@@ -44,5 +44,57 @@ namespace ChargingCabinetLib.Test.Unit
  
             _fakeChargerDisplay.Received().DisplayStationMsg("Dør lukket");
         }
+
+        [TestCase(123)]
+        public void RfIdDetected_OneRfIdEvent(int id)
+        {
+            _fakeChargerControl.IsConnected().Returns(true);
+
+            _fakeRfIdReader.RfIdDetectedEvent +=
+                Raise.EventWith<RfIdDetectedEventArgs>(new RfIdDetectedEventArgs {RfId = id});
+
+            
+            _fakeChargerControl.Received().IsConnected();
+            _fakeDoor.Received().LockDoor();
+            _fakeChargerControl.Received().StartCharge();
+            _fakeLogger.Received().Log($"Skab låst med RFID: {id}");
+            _fakeChargerDisplay.DisplayStationMsg("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
+        }
+
+        [TestCase(123,123)]
+        [TestCase(int.MaxValue, int.MaxValue)]
+        [TestCase(int.MinValue, int.MinValue)]
+        [TestCase(11, 12)]
+        [TestCase(-11, 11)]
+        [TestCase(0, 0)]
+        public void RfIdDetected_TwoRfIdEvent(int id, int id2)
+        {
+            _fakeChargerControl.IsConnected().Returns(true);
+
+            _fakeRfIdReader.RfIdDetectedEvent +=
+                Raise.EventWith<RfIdDetectedEventArgs>(new RfIdDetectedEventArgs { RfId = id });
+
+
+            _fakeChargerControl.Received().IsConnected();
+            _fakeDoor.Received().LockDoor();
+            _fakeChargerControl.Received().StartCharge();
+            _fakeLogger.Received().Log($"Skab låst med RFID: {id}");
+            _fakeChargerDisplay.DisplayStationMsg("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
+
+            _fakeRfIdReader.RfIdDetectedEvent +=
+                Raise.EventWith<RfIdDetectedEventArgs>(new RfIdDetectedEventArgs { RfId = id2 });
+
+            if (id == id2)
+            {
+                _fakeChargerControl.Received().StopCharge();
+                _fakeDoor.Received().UnlockDoor();
+                _fakeLogger.Received().Log($"Skab låst op med RFID: {id2}");
+                _fakeChargerDisplay.DisplayStationMsg("Åben skabet og tag din telefon ud, husk at luk døren efter dig!");
+            }
+            else
+            {
+                _fakeChargerDisplay.Received().DisplayStationMsg("Forkert RFID tag");
+            }
+        }
     }
 }
