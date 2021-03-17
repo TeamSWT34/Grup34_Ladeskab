@@ -24,7 +24,7 @@ namespace ConsoleApp
             {
                 string input;
                 display.DisplayProgramMsg("Indtast 'Exit, 'Open, 'Close, 'Usb, 'RfRead: ");
-                input = Console.ReadLine();
+                input = display.ReadLine();
                 if (string.IsNullOrEmpty(input))
                     continue;
 
@@ -54,7 +54,7 @@ namespace ConsoleApp
                     case 'R':
                     case 'r':
                         display.DisplayProgramMsg("Indtast RFID id: ");
-                        string idString = System.Console.ReadLine();
+                        string idString = display.ReadLine();
 
                         int id = Convert.ToInt32(idString);
                         rfIdReader.OnRfIdRead(id);

@@ -18,8 +18,8 @@ namespace ChargingCabinetLib.Test.Unit
         //[Test]
         //public void DisplayProgramMsg_CanRun()
         //{
-        //    //_uut.DisplayStationMsg("test");
-        //    Assert.DoesNotThrow(()=>_uut.DisplayStationMsg("test"));
+        //    _uut.DisplayStationMsg("test");
+        //    Assert.DoesNotThrow(() => _uut.DisplayProgramMsg("test"));
         //}
 
         //[Test]
@@ -31,7 +31,7 @@ namespace ChargingCabinetLib.Test.Unit
         //[Test]
         //public void DisplayChargerMsg_CanRun()
         //{
-        //    Assert.DoesNotThrow(() => _uut.DisplayStationMsg("test"));
+        //    Assert.DoesNotThrow(() => _uut.DisplayChargerMsg("test"));
         //}
     }
 }

@@ -38,11 +38,39 @@ namespace ChargingCabinetLib
 
         private void UpdateDisplay()
         {
-            Console.Clear();
+            //Console.Clear(); //this gives test error
+            int curLeft = Console.CursorLeft;
+            int curTop = Console.CursorTop;
+            Clear();
             Console.WriteLine($"Station msg : {_stationMsg}");
             Console.WriteLine($"Charge msg : {_chargerMsg}");
             Console.WriteLine();
             Console.WriteLine(_programMsg);
+            if(curTop!=0)
+                Console.SetCursorPosition(curLeft, curTop);
+        }
+
+        private void Clear()
+        {
+            string emptyConsoleLine = " ".PadLeft(Console.WindowWidth);
+            Console.SetCursorPosition(0,0);
+            for (int i = 0; i < 4; i++)
+            {
+                Console.WriteLine(emptyConsoleLine);
+            }
+            Console.SetCursorPosition(0,0);
+        }
+
+        public string ReadLine()
+        {
+            int currentRow = Console.CursorTop;
+            string ret = Console.ReadLine();
+            
+            Console.SetCursorPosition(0, currentRow);
+            Console.WriteLine(" ".PadLeft(Console.WindowWidth));
+            Console.SetCursorPosition(0, currentRow);
+
+            return ret;
         }
     }
 }
