@@ -42,7 +42,7 @@ namespace ChargingCabinetLib
             _usbCharger.StopCharge();
         }
 
-        bool IChargerControl.IsConnected()
+        public bool IsConnected()
         {
             return _usbCharger.Connected;
         }

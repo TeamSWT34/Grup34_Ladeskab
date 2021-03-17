@@ -61,5 +61,21 @@ namespace ChargingCabinetLib.Test.Unit
             _fakeDisplay.Received(res).DisplayChargerMsg($"{defaultCurrent}");
 
         }
+
+        [Test]
+        public void IsConnected_ReturnFalse()
+        {
+            _fakeUsbCharger.Connected.Returns(false);
+
+            Assert.IsFalse(_uut.IsConnected());
+        }
+
+        [Test]
+        public void IsConnected_ReturnTrue()
+        {
+            _fakeUsbCharger.Connected.Returns(true);
+
+            Assert.IsTrue(_uut.IsConnected());
+        }
     }
 } 
