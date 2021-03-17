@@ -23,10 +23,10 @@ namespace ChargingCabinetLib
 
         private void OnCurrentValueEvent(object sender, CurrentEventArgs e)
         {
-            if (_displayCounter > MAX_DISPLAY_COUNT)
+            if (_displayCounter >= MAX_DISPLAY_COUNT)
             { 
                 _display.DisplayChargerMsg($"{e.Current}");
-                _displayCounter = 0;
+                _displayCounter = 1;
             }
             else
                 _displayCounter++;

@@ -33,11 +33,33 @@ namespace ChargingCabinetLib.Test.Unit
             _fakeUsbCharger.Received().StopCharge();
         }
 
-        //[TestCase("500")]
-        //public void DisplayCounterValue_ChargerDiplay(string chargeMsg)
-        //{
-        //    _uut.StartCharge();
-        //    _fakeDisplay.Received().DisplayStationMsg();
-        //}
+        [TestCase(double.MaxValue)]
+        [TestCase(double.MinValue)]
+        [TestCase(0)]
+        [TestCase(123.456)]
+        public void DisplayCounterValue_ChargerDiplay(double a)
+        {
+            _fakeUsbCharger.CurrentValueEvent += Raise.EventWith<CurrentEventArgs>(new CurrentEventArgs { Current = a});
+
+            _fakeDisplay.Received().DisplayChargerMsg($"{a}");
+
+        }
+
+        [TestCase(1,1)]
+        [TestCase(20,1)]
+        [TestCase(40, 1)]
+        [TestCase(41,2)]
+        public void OnCurrentValueEvent_CountDisplay_MultiEvent(int a, int res)
+        {
+            const double defaultCurrent = 500.0;
+
+            for (int i = 0; i < a; i++)
+            {
+                _fakeUsbCharger.CurrentValueEvent += Raise.EventWith<CurrentEventArgs>(new CurrentEventArgs { Current = defaultCurrent });
+            }
+
+            _fakeDisplay.Received(res).DisplayChargerMsg($"{defaultCurrent}");
+
+        }
     }
 } 
