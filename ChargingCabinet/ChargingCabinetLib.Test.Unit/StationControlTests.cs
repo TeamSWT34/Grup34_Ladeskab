@@ -2,6 +2,7 @@
 using NSubstitute;
 using NSubstitute.Core;
 using NSubstitute.Extensions;
+using NSubstitute.Routing.Handlers;
 using NUnit.Framework;
 
 namespace ChargingCabinetLib.Test.Unit
@@ -29,16 +30,18 @@ namespace ChargingCabinetLib.Test.Unit
         }
 
         [Test]
-        public void DoorOpened_isDisplayCalled()
+        public void DoorOpenedEvent_isDisplayCalled()
         {
-            _fakeDoor.OnDoorOpen();
+            _fakeDoor.DoorOpenCloseEvent += Raise.EventWith<DoorOpenEventArgs>(new DoorOpenEventArgs {DoorOpen = true});
+
             _fakeChargerDisplay.Received().DisplayStationMsg("Dør åbnet");
         }
 
         [Test]
-        public void DoorClosed_isDisplayCalled()
+        public void DoorClosedEvent_isDisplayCalled()
         {
-            _fakeDoor.OnDoorClose();
+            _fakeDoor.DoorOpenCloseEvent += Raise.EventWith<DoorOpenEventArgs>(new DoorOpenEventArgs { DoorOpen = false });
+ 
             _fakeChargerDisplay.Received().DisplayStationMsg("Dør lukket");
         }
     }
