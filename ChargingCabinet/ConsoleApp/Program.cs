@@ -13,7 +13,7 @@ namespace ConsoleApp
 
             IDoor door = new Door();
             IRfIdReader rfIdReader = new RfIdReader();
-            IChargerDisplay display = new ConsoleChargerDisplay();
+            IChargerDisplay display = new ConsoleChargerDisplay(new ConsoleControl("Charging Cabinet"));
             UsbChargerSimulator phoneState = new UsbChargerSimulator();
 
             StationControl stationControl = CreateStationControl(door, rfIdReader, display, phoneState);

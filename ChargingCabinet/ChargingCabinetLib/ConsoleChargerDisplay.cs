@@ -10,12 +10,15 @@ namespace ChargingCabinetLib
         private string _programMsg;
         private string _stationMsg;
         private string _chargerMsg;
+        private readonly IConsoleControl _consoleControl;
 
-        public ConsoleChargerDisplay()
+        public ConsoleChargerDisplay(IConsoleControl consoleControl)
         {
+            _consoleControl = consoleControl;
             _programMsg = "started";
             _stationMsg = "ini";
             _chargerMsg = "none";
+            InitText();
         }
 
         public void DisplayProgramMsg(string msg)
@@ -36,40 +39,51 @@ namespace ChargingCabinetLib
             UpdateDisplay();
         }
 
+        public string ReadLine()
+        {
+            int currentRow = _consoleControl.CursorTop;
+            string ret = _consoleControl.ReadLine();
+
+            _consoleControl.SetCursorPosition(0, currentRow);
+            _consoleControl.WriteLine(" ".PadLeft(_consoleControl.WindowWidth));
+            _consoleControl.SetCursorPosition(0, currentRow);
+
+            return ret;
+        }
+
         private void UpdateDisplay()
         {
-            int curLeft = Console.CursorLeft;
-            int curTop = Console.CursorTop;
+            int curLeft = _consoleControl.CursorLeft;
+            int curTop = _consoleControl.CursorTop;
             Clear();
-            Console.WriteLine($"Station msg : {_stationMsg}");
-            Console.WriteLine($"Charge msg : {_chargerMsg}");
-            Console.WriteLine();
-            Console.WriteLine(_programMsg);
-            if(curTop!=0)
-                Console.SetCursorPosition(curLeft, curTop);
+            WriteProgramText();
+            _consoleControl.SetCursorPosition(curLeft, curTop);
         }
 
         private void Clear()
         {
-            string emptyConsoleLine = " ".PadLeft(Console.WindowWidth);
-            Console.SetCursorPosition(0,0);
+            string emptyConsoleLine = " ".PadLeft(_consoleControl.WindowWidth);
+            _consoleControl.SetCursorPosition(0,0);
             for (int i = 0; i < 4; i++)
             {
-                Console.WriteLine(emptyConsoleLine);
+                _consoleControl.WriteLine(emptyConsoleLine);
             }
-            Console.SetCursorPosition(0,0);
+            _consoleControl.SetCursorPosition(0,0);
         }
 
-        public string ReadLine()
+        private void InitText()
         {
-            int currentRow = Console.CursorTop;
-            string ret = Console.ReadLine();
-            
-            Console.SetCursorPosition(0, currentRow);
-            Console.WriteLine(" ".PadLeft(Console.WindowWidth));
-            Console.SetCursorPosition(0, currentRow);
-
-            return ret;
+            WriteProgramText();
         }
+
+        private void WriteProgramText()
+        {
+            _consoleControl.WriteLine($"Station msg : {_stationMsg}");
+            _consoleControl.WriteLine($"Charge msg : {_chargerMsg}");
+            _consoleControl.WriteLine();
+            _consoleControl.WriteLine(_programMsg);
+        }
+
+
     }
 }
