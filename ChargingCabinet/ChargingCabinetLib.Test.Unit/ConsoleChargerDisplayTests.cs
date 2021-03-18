@@ -1,5 +1,4 @@
-﻿using System;
-using ChargingCabinetLib.Interface;
+﻿using ChargingCabinetLib.Interface;
 using NSubstitute;
 using NUnit.Framework;
 

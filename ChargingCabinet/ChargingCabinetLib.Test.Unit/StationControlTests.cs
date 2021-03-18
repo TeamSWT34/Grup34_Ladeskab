@@ -1,8 +1,5 @@
 ﻿using ChargingCabinetLib.Interface;
 using NSubstitute;
-using NSubstitute.Core;
-using NSubstitute.Extensions;
-using NSubstitute.Routing.Handlers;
 using NUnit.Framework;
 
 namespace ChargingCabinetLib.Test.Unit

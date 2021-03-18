@@ -1,5 +1,4 @@
 ﻿using ChargingCabinetLib.Interface;
-using NSubstitute;
 using NUnit.Framework;
 
 namespace ChargingCabinetLib.Test.Unit
