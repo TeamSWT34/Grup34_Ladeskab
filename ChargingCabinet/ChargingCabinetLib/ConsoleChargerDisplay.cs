@@ -38,7 +38,6 @@ namespace ChargingCabinetLib
 
         private void UpdateDisplay()
         {
-            //Console.Clear(); //this gives test error
             int curLeft = Console.CursorLeft;
             int curTop = Console.CursorTop;
             Clear();
