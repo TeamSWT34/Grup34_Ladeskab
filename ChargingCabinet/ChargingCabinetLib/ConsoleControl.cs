@@ -7,6 +7,10 @@ namespace ChargingCabinetLib
 {
     public class ConsoleControl : IConsoleControl
     {
+        public ConsoleControl(string title)
+        {
+            Console.Title = title;
+        }
         public int WindowWidth => Console.WindowWidth;
         public int CursorLeft => Console.CursorLeft;
         public int CursorTop => Console.CursorTop;
