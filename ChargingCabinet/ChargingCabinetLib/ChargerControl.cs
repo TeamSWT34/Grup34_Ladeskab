@@ -7,12 +7,12 @@ namespace ChargingCabinetLib
 {
     public class ChargerControl : IChargerControl
     {
-        private const double DISPLAY_UPDATE_TIME = 10; //should maybe be refactored to display
-        private const int MAX_DISPLAY_COUNTER = (int)(DISPLAY_UPDATE_TIME*4); //tilsvarende 10s i usbSim
+        private const double DisplayUpdateTime = 10; //should maybe be refactored to display
+        private const int MaxDisplayCounter = (int)(DisplayUpdateTime*4); //tilsvarende 10s i usbSim
 
         private readonly IUsbCharger _usbCharger;
         private readonly IChargerDisplay _display;
-        private int _displayCounter = MAX_DISPLAY_COUNTER;
+        private int _displayCounter = MaxDisplayCounter;
 
         public ChargerControl(IUsbCharger usbCharger, IChargerDisplay  display)
         {
@@ -24,7 +24,7 @@ namespace ChargingCabinetLib
 
         private void OnCurrentValueEvent(object sender, CurrentEventArgs e)
         {
-            if (_displayCounter >= MAX_DISPLAY_COUNTER)
+            if (_displayCounter >= MaxDisplayCounter)
             { 
                 _display.DisplayChargerMsg($"{e.Current}");
                 _displayCounter = 1;
