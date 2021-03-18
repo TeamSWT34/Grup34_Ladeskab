@@ -42,7 +42,6 @@ namespace ChargingCabinetLib.Test.Unit
             _fakeUsbCharger.CurrentValueEvent += Raise.EventWith<CurrentEventArgs>(new CurrentEventArgs { Current = a});
 
             _fakeDisplay.Received().DisplayChargerMsg($"{a}");
-
         }
 
         [TestCase(1,1)]
