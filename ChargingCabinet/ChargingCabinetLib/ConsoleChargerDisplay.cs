@@ -45,7 +45,7 @@ namespace ChargingCabinetLib
             string ret = _consoleControl.ReadLine();
 
             _consoleControl.SetCursorPosition(0, currentRow);
-            _consoleControl.WriteLine(" ".PadLeft(Console.WindowWidth));
+            _consoleControl.WriteLine(" ".PadLeft(_consoleControl.WindowWidth));
             _consoleControl.SetCursorPosition(0, currentRow);
 
             return ret;
@@ -57,18 +57,18 @@ namespace ChargingCabinetLib
             int curTop = _consoleControl.CursorTop;
             Clear();
             WriteProgramText();
-            Console.SetCursorPosition(curLeft, curTop);
+            _consoleControl.SetCursorPosition(curLeft, curTop);
         }
 
         private void Clear()
         {
-            string emptyConsoleLine = " ".PadLeft(Console.WindowWidth);
-            Console.SetCursorPosition(0,0);
+            string emptyConsoleLine = " ".PadLeft(_consoleControl.WindowWidth);
+            _consoleControl.SetCursorPosition(0,0);
             for (int i = 0; i < 4; i++)
             {
-                Console.WriteLine(emptyConsoleLine);
+                _consoleControl.WriteLine(emptyConsoleLine);
             }
-            Console.SetCursorPosition(0,0);
+            _consoleControl.SetCursorPosition(0,0);
         }
 
         private void InitText()
