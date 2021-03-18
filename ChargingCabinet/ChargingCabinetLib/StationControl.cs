@@ -43,18 +43,10 @@ namespace ChargingCabinetLib
 		private void OnDoorOpenCloseEvent(object sender, DoorOpenEventArgs e)
 		{
 			if (e.DoorOpen )
-			{
-				DoorOpened();
-                //_logger.Log("Dør åben");
-                _display.DisplayStationMsg("Dør åbnet");
-            }
-			else
-			{
-				DoorClosed();
-                //_logger.Log("Dør lukket");
-                _display.DisplayStationMsg("Dør lukket");
-            }
-		}
+                DoorOpened();
+            else
+                DoorClosed();
+        }
 
 		private void OnRfIdDetectedEvent(object sender, RfIdDetectedEventArgs e)
         {
@@ -116,12 +108,13 @@ namespace ChargingCabinetLib
         private void DoorOpened()
         {
 	        _state = LadeskabState.DoorOpen;
+            _display.DisplayStationMsg("Dør åbnet");
         }
 
         private void DoorClosed()
         {
 	        _state = LadeskabState.Available;
+            _display.DisplayStationMsg("Dør lukket");
         }
-        // Her mangler de andre trigger handlere
     }
 }
