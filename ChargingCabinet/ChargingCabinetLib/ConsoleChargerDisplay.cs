@@ -10,9 +10,11 @@ namespace ChargingCabinetLib
         private string _programMsg;
         private string _stationMsg;
         private string _chargerMsg;
+        private readonly IConsoleControl _consoleControl;
 
-        public ConsoleChargerDisplay()
+        public ConsoleChargerDisplay(IConsoleControl consoleControl)
         {
+            _consoleControl = consoleControl;
             _programMsg = "started";
             _stationMsg = "ini";
             _chargerMsg = "none";
@@ -38,13 +40,13 @@ namespace ChargingCabinetLib
 
         private void UpdateDisplay()
         {
-            int curLeft = Console.CursorLeft;
-            int curTop = Console.CursorTop;
+            int curLeft = _consoleControl.CursorLeft;
+            int curTop = _consoleControl.CursorTop;
             Clear();
-            Console.WriteLine($"Station msg : {_stationMsg}");
-            Console.WriteLine($"Charge msg : {_chargerMsg}");
-            Console.WriteLine();
-            Console.WriteLine(_programMsg);
+            _consoleControl.WriteLine($"Station msg : {_stationMsg}");
+            _consoleControl.WriteLine($"Charge msg : {_chargerMsg}");
+            _consoleControl.WriteLine();
+            _consoleControl.WriteLine(_programMsg);
             if(curTop!=0)
                 Console.SetCursorPosition(curLeft, curTop);
         }
@@ -62,12 +64,12 @@ namespace ChargingCabinetLib
 
         public string ReadLine()
         {
-            int currentRow = Console.CursorTop;
-            string ret = Console.ReadLine();
-            
-            Console.SetCursorPosition(0, currentRow);
-            Console.WriteLine(" ".PadLeft(Console.WindowWidth));
-            Console.SetCursorPosition(0, currentRow);
+            int currentRow = _consoleControl.CursorTop;
+            string ret = _consoleControl.ReadLine();
+
+            _consoleControl.SetCursorPosition(0, currentRow);
+            _consoleControl.WriteLine(" ".PadLeft(Console.WindowWidth));
+            _consoleControl.SetCursorPosition(0, currentRow);
 
             return ret;
         }
