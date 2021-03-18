@@ -92,6 +92,22 @@ namespace ChargingCabinetLib.Test.Unit
             _fakConsoleControl.Received(10).WriteLine(Arg.Any<string>());
         }
 
+        [TestCase(0,"test")]
+        [TestCase(-1,"")]
+        [TestCase(1,"")]
+        [TestCase(5,null)]
+        public void ReadLine_(int curRow, string read)
+        {
+            _fakConsoleControl.CursorTop.Returns(curRow);
+            _fakConsoleControl.ReadLine().Returns(read);
+
+            string res = _uut.ReadLine();
+
+            _fakConsoleControl.Received().ReadLine();
+            _fakConsoleControl.Received(2).SetCursorPosition(0,curRow);
+
+            Assert.That(res==read);
+        }
 
     }
 }
