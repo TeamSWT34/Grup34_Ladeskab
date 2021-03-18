@@ -18,6 +18,7 @@ namespace ChargingCabinetLib
             _programMsg = "started";
             _stationMsg = "ini";
             _chargerMsg = "none";
+            InitText();
         }
 
         public void DisplayProgramMsg(string msg)
@@ -38,17 +39,25 @@ namespace ChargingCabinetLib
             UpdateDisplay();
         }
 
+        public string ReadLine()
+        {
+            int currentRow = _consoleControl.CursorTop;
+            string ret = _consoleControl.ReadLine();
+
+            _consoleControl.SetCursorPosition(0, currentRow);
+            _consoleControl.WriteLine(" ".PadLeft(Console.WindowWidth));
+            _consoleControl.SetCursorPosition(0, currentRow);
+
+            return ret;
+        }
+
         private void UpdateDisplay()
         {
             int curLeft = _consoleControl.CursorLeft;
             int curTop = _consoleControl.CursorTop;
             Clear();
-            _consoleControl.WriteLine($"Station msg : {_stationMsg}");
-            _consoleControl.WriteLine($"Charge msg : {_chargerMsg}");
-            _consoleControl.WriteLine();
-            _consoleControl.WriteLine(_programMsg);
-            if(curTop!=0)
-                Console.SetCursorPosition(curLeft, curTop);
+            WriteProgramText();
+            Console.SetCursorPosition(curLeft, curTop);
         }
 
         private void Clear()
@@ -62,16 +71,19 @@ namespace ChargingCabinetLib
             Console.SetCursorPosition(0,0);
         }
 
-        public string ReadLine()
+        private void InitText()
         {
-            int currentRow = _consoleControl.CursorTop;
-            string ret = _consoleControl.ReadLine();
-
-            _consoleControl.SetCursorPosition(0, currentRow);
-            _consoleControl.WriteLine(" ".PadLeft(Console.WindowWidth));
-            _consoleControl.SetCursorPosition(0, currentRow);
-
-            return ret;
+            WriteProgramText();
         }
+
+        private void WriteProgramText()
+        {
+            _consoleControl.WriteLine($"Station msg : {_stationMsg}");
+            _consoleControl.WriteLine($"Charge msg : {_chargerMsg}");
+            _consoleControl.WriteLine();
+            _consoleControl.WriteLine(_programMsg);
+        }
+
+
     }
 }

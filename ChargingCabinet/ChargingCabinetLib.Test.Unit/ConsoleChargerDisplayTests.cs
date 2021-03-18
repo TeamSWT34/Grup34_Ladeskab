@@ -1,4 +1,5 @@
 ﻿using System;
+using ChargingCabinetLib.Interface;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -8,30 +9,37 @@ namespace ChargingCabinetLib.Test.Unit
     public class ConsoleChargerDisplayTests
     {
         private ConsoleChargerDisplay _uut;
+        private IConsoleControl _fakConsoleControl;
 
         [SetUp]
         public void Setup()
         {
-            _uut = new ConsoleChargerDisplay();
+            _fakConsoleControl = Substitute.For<IConsoleControl>();
+            _uut = new ConsoleChargerDisplay(_fakConsoleControl);
         }
 
-        //[Test]
-        //public void DisplayProgramMsg_CanRun()
-        //{
-        //    _uut.DisplayStationMsg("test");
-        //    Assert.DoesNotThrow(() => _uut.DisplayProgramMsg("test"));
-        //}
+        [TestCase("test")]
+        [TestCase("")]
+        [TestCase(null)]
+        public void DisplayProgramMsg_CanRun(string textIn)
+        {
+            _uut.DisplayProgramMsg(textIn);
+        }
 
-        //[Test]
-        //public void DisplayStationMsg_CanRun()
-        //{
-        //    Assert.DoesNotThrow(() => _uut.DisplayStationMsg("test"));
-        //}
+        [TestCase("test")]
+        [TestCase("")]
+        [TestCase(null)]
+        public void DisplayStationMsg_CanRun(string textIn)
+        {
+            _uut.DisplayStationMsg(textIn);
+        }
 
-        //[Test]
-        //public void DisplayChargerMsg_CanRun()
-        //{
-        //    Assert.DoesNotThrow(() => _uut.DisplayChargerMsg("test"));
-        //}
+        [TestCase("test")]
+        [TestCase("")]
+        [TestCase(null)]
+        public void DisplayChargerMsg_CanRun(string textIn)
+        {
+            _uut.DisplayChargerMsg(textIn);
+        }
     }
 }
