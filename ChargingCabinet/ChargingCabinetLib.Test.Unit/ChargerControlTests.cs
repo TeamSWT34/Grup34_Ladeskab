@@ -34,10 +34,6 @@ namespace ChargingCabinetLib.Test.Unit
         }
 
 
-        //[TestCase(double.MaxValue)]
-        //[TestCase(double.MinValue)]
-
-
         private const string NO_CONNECT_STRING = "Der er ingen forbindelse til en telefon";
         private const string Done_STRING = "Telefonen er fuld opladt: ";
         private const string Runing_STRING = "Opladning er igang sat: ";
@@ -72,28 +68,6 @@ namespace ChargingCabinetLib.Test.Unit
 
             _fakeDisplay.Received(0).DisplayChargerMsg(Arg.Any<string>());
         }
-
-        /*
-        [TestCase(1, 1)]
-        [TestCase(20, 1)]
-        [TestCase(40, 1)]
-        [TestCase(41, 2)]
-        public void OnCurrentValueEvent_CountDisplay_MultiEvent(int a, int res)
-        {
-            const double defaultCurrent = 500.0;
-
-            for (int i = 0; i < a; i++)
-            {
-                _fakeUsbCharger.CurrentValueEvent += Raise.EventWith<CurrentEventArgs>(new CurrentEventArgs { Current = defaultCurrent });
-            }
-
-            _fakeDisplay.Received(res).DisplayChargerMsg($"{defaultCurrent}");
-
-        }
-        */
-
-
-
 
         [Test]
         public void IsConnected_ReturnFalse()
