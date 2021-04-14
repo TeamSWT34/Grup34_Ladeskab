@@ -33,21 +33,51 @@ namespace ChargingCabinetLib.Test.Unit
             _fakeUsbCharger.Received().StopCharge();
         }
 
-        [TestCase(double.MaxValue)]
-        [TestCase(double.MinValue)]
-        [TestCase(0)]
-        [TestCase(123.456)]
-        public void DisplayCounterValue_ChargerDiplay(double a)
+
+        //[TestCase(double.MaxValue)]
+        //[TestCase(double.MinValue)]
+
+
+        private const string NO_CONNECT_STRING = "Der er ingen forbindelse til en telefon";
+        private const string Done_STRING = "Telefonen er fuld opladt: ";
+        private const string Runing_STRING = "Opladning er igang sat: ";
+        private const string ERROR_STRING = "Noget gik galt med opladning: 'ERROR'";
+
+        
+
+        [TestCase(0, NO_CONNECT_STRING)]
+        [TestCase(500.1, ERROR_STRING)]
+        [TestCase(double.MaxValue, ERROR_STRING)]
+        [TestCase(499.9, Runing_STRING, true)]
+        [TestCase(5.1, Runing_STRING, true)]
+        [TestCase(5, Done_STRING, true)]
+        [TestCase(0.1, Done_STRING, true)]
+        
+
+        public void DisplayCounterValue_ChargerDiplay(double a, string printOut, bool usesCurrent = false)
         {
             _fakeUsbCharger.CurrentValueEvent += Raise.EventWith<CurrentEventArgs>(new CurrentEventArgs { Current = a});
 
-            _fakeDisplay.Received().DisplayChargerMsg($"{a}");
+            if (usesCurrent)
+                printOut = printOut + a;
+
+            _fakeDisplay.Received(1).DisplayChargerMsg(printOut);
         }
 
-        [TestCase(1,1)]
-        [TestCase(20,1)]
+        [TestCase(-0.1)]
+        [TestCase(double.MinValue)]
+        public void DisplayCounterValue_ChargerDiplay_MinValue(double a)
+        {
+            _fakeUsbCharger.CurrentValueEvent += Raise.EventWith<CurrentEventArgs>(new CurrentEventArgs { Current = a });
+
+            _fakeDisplay.Received(0).DisplayChargerMsg(Arg.Any<string>());
+        }
+
+        /*
+        [TestCase(1, 1)]
+        [TestCase(20, 1)]
         [TestCase(40, 1)]
-        [TestCase(41,2)]
+        [TestCase(41, 2)]
         public void OnCurrentValueEvent_CountDisplay_MultiEvent(int a, int res)
         {
             const double defaultCurrent = 500.0;
@@ -60,6 +90,10 @@ namespace ChargingCabinetLib.Test.Unit
             _fakeDisplay.Received(res).DisplayChargerMsg($"{defaultCurrent}");
 
         }
+        */
+
+
+
 
         [Test]
         public void IsConnected_ReturnFalse()
