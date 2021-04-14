@@ -71,6 +71,8 @@ namespace ChargingCabinetLib.Test.Unit
 
             _fakeRfIdReader.RfIdDetectedEvent +=
                 Raise.EventWith<RfIdDetectedEventArgs>(new RfIdDetectedEventArgs { RfId = id });
+            
+            //Test for RfIdDetected one event tested by RfIdDetected_OneRfIdEvent
 
             _fakeRfIdReader.RfIdDetectedEvent += Raise.EventWith<RfIdDetectedEventArgs>(new RfIdDetectedEventArgs { RfId = id });
 
@@ -89,6 +91,8 @@ namespace ChargingCabinetLib.Test.Unit
 
             _fakeRfIdReader.RfIdDetectedEvent +=
                 Raise.EventWith<RfIdDetectedEventArgs>(new RfIdDetectedEventArgs { RfId = id });
+            
+            //Test for RfIdDetected one event tested by RfIdDetected_OneRfIdEvent
 
             _fakeRfIdReader.RfIdDetectedEvent += Raise.EventWith<RfIdDetectedEventArgs>(new RfIdDetectedEventArgs { RfId = id2 });
 
