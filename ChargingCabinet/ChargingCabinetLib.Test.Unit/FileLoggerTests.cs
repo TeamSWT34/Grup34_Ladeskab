@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using Microsoft.VisualStudio.TestPlatform.Common.DataCollection;
-using Microsoft.VisualStudio.TestPlatform.Utilities;
 using NUnit.Framework;
 
 namespace ChargingCabinetLib.Test.Unit

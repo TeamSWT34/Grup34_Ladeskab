@@ -1,8 +1,5 @@
 ﻿using ChargingCabinetLib.Interface;
 using NSubstitute;
-using NSubstitute.Core;
-using NSubstitute.Extensions;
-using NSubstitute.Routing.Handlers;
 using NUnit.Framework;
 
 namespace ChargingCabinetLib.Test.Unit
@@ -64,41 +61,45 @@ namespace ChargingCabinetLib.Test.Unit
             _fakeChargerDisplay.DisplayStationMsg("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
         }
 
-        [TestCase(123,123)]
-        [TestCase(int.MaxValue, int.MaxValue)]
-        [TestCase(int.MinValue, int.MinValue)]
-        [TestCase(11, 12)]
-        [TestCase(-11, 11)]
-        [TestCase(0, 0)]
-        public void RfIdDetected_TwoRfIdEvent(int id, int id2)
+        [TestCase(123)]
+        [TestCase(int.MaxValue)]
+        [TestCase(int.MinValue)]
+        [TestCase(0)]
+        public void RfIdDetected_TwoRfIdEvent_SameId(int id)
         {
             _fakeChargerControl.IsConnected().Returns(true);
 
             _fakeRfIdReader.RfIdDetectedEvent +=
                 Raise.EventWith<RfIdDetectedEventArgs>(new RfIdDetectedEventArgs { RfId = id });
+            
+            //Test for RfIdDetected one event tested by RfIdDetected_OneRfIdEvent
 
+            _fakeRfIdReader.RfIdDetectedEvent += Raise.EventWith<RfIdDetectedEventArgs>(new RfIdDetectedEventArgs { RfId = id });
 
-            _fakeChargerControl.Received().IsConnected();
-            _fakeDoor.Received().LockDoor();
-            _fakeChargerControl.Received().StartCharge();
-            _fakeLogger.Received().Log($"Skab låst med RFID: {id}");
-            _fakeChargerDisplay.DisplayStationMsg("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
+            _fakeChargerControl.Received().StopCharge();
+            _fakeDoor.Received().UnlockDoor();
+            _fakeLogger.Received().Log($"Skab låst op med RFID: {id}");
+            _fakeChargerDisplay.DisplayStationMsg("Åben skabet og tag din telefon ud, husk at luk døren efter dig!");
+
+        }
+
+        [TestCase(11, 12)]
+        [TestCase(-11, 11)]
+        public void RfIdDetected_TwoRfIdEvent_DifferenceId(int id, int id2)
+        {
+            _fakeChargerControl.IsConnected().Returns(true);
 
             _fakeRfIdReader.RfIdDetectedEvent +=
-                Raise.EventWith<RfIdDetectedEventArgs>(new RfIdDetectedEventArgs { RfId = id2 });
+                Raise.EventWith<RfIdDetectedEventArgs>(new RfIdDetectedEventArgs { RfId = id });
+            
+            //Test for RfIdDetected one event tested by RfIdDetected_OneRfIdEvent
 
-            if (id == id2)
-            {
-                _fakeChargerControl.Received().StopCharge();
-                _fakeDoor.Received().UnlockDoor();
-                _fakeLogger.Received().Log($"Skab låst op med RFID: {id2}");
-                _fakeChargerDisplay.DisplayStationMsg("Åben skabet og tag din telefon ud, husk at luk døren efter dig!");
-            }
-            else
-            {
-                _fakeChargerDisplay.Received().DisplayStationMsg("Forkert RFID tag");
-            }
+            _fakeRfIdReader.RfIdDetectedEvent += Raise.EventWith<RfIdDetectedEventArgs>(new RfIdDetectedEventArgs { RfId = id2 });
+
+            _fakeChargerDisplay.Received().DisplayStationMsg("Forkert RFID tag");
+            
         }
+
 
         [Test]
         public void RfIdDetected_IsConnected_ReturnFalse()

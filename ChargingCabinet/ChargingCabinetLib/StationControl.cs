@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ChargingCabinetLib.Interface;
+﻿using ChargingCabinetLib.Interface;
 
 namespace ChargingCabinetLib
 {
-    public class StationControl : IStationControl
+    public class StationControl
     {
         // Enum med tilstande ("states") svarende til tilstandsdiagrammet for klassen
         private enum LadeskabState
